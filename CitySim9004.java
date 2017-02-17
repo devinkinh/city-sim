@@ -1,72 +1,63 @@
 import java.util.Random;
 import java.util.ArrayList;
+// 
+// javac -cp ./junit-4.12.jar;./hamcrest-core-1.3.jar;./mockito-core-1.10.19.jar;./objenesis-2.4.jar; *.java
+//
+public class  CitySim9004{
 
-public class CitySim9004{
+	private City city;
+	private Random rng;
+
+	public CitySim9004(Random rng_){
+
+		rng = rng_;
+		city = new City("pittsburgh");
+
+	}
 	
+
+	public Driver[] genDrivers(int numDrivers){
+		
+		Driver[] res = new Driver[numDrivers];
+		for(int i = 0;i < numDrivers; i++){
+			
+			res[i] = new Driver(("Driver "+(i+1)),  city.randomLocInCity(rng)); // set up initial position
+		
+		}
+		return res;
+
+
+	}
+		
+	public void run(){
+		
+		String road= "";
+		Driver[] driver = genDrivers(5);
+		
+		for(int i = 0;i < driver.length; i++){
+			
+			driver[i].checkIfSennot();
+			while(!driver[i].checkOutside()){ 
+				
+				road = driver[i].chooseDest(rng);  
+				driver[i].checkIfSennot();
+				System.out.println(driver[i].update(road));
+				
+			}
+			
+			System.out.println(driver[i].report(driver[i].checkOutsideLocal(road)));
+			
+		}
+	}
 	
 	public static void main(String[] args) {
 		
 		int god_seed = Integer.parseInt(args[0]);
 		Random rng = new Random(god_seed);
 		
-		Location presby = new Location("Presby");
-		Location union = new Location("Union");
-		Location sennot = new Location("Sennot");
-		Location hillman = new Location("Hillman");
-		Location outside = new Location("Outside Location");
+		CitySim9004 city_sim = new CitySim9004(rng);
+		city_sim.run();
 		
-
-				
-		presby.addStreet(new Street(sennot, "Bill st"));
-		presby.addStreet(new Street(union, "Fourth ave"));
-		
-		union.addStreet(new Street( hillman, "Phil st"));
-		union.addStreet(new Street(outside, "Fourth ave"));
-		
-		sennot.addStreet(new Street(presby, "Bill st"));
-		sennot.addStreet(new Street(outside, "Fifth ave"));
-		
-		hillman.addStreet(new Street(union, "Phil st"));
-		hillman.addStreet(new Street( sennot, "Fifth ave"));
-		
-		ArrayList<Location> city = new ArrayList<Location>();
-		city.add(presby);
-		city.add(union);
-		city.add(sennot);
-		city.add(hillman);
-		city.add(outside);
-		
-		String road="";
-		for(int i = 1;i < 6; i++){
-			
-			Driver driver = new Driver(("Driver "+i), city.get(rng.nextInt(4))); // set up initial position
-			driver.checkIfSennot();
-			while(!driver.position.name.equals("Outside Location")){
-				
-				road = driver.chooseDest(rng);  
-				driver.checkIfSennot();
-				System.out.println(driver.name + " heading from " + driver.lastPosit.name + " to " + driver.position.name + " via " +road );
-				
-			}
-			if(road.equals("Fifth ave")){
-				System.out.println(driver.name+ " has gone to Cleveland!");
-				
-			} else System.out.println(driver.name+ " has gone to Philly!");
-			
-			
-			System.out.println(driver.name+" met with Professor Laboon " + driver.visitedSennot + " time(s)");
-			
-			if(driver.visitedSennot == 0){
-				System.out.println("That student missed out!");
-			}
-			
-			if(driver.visitedSennot >= 3){
-				System.out.println("Wow, that driver needed a lot of CS help!");
-			} 
-			
-			System.out.println("-----");
-			
-		}
 	
 	}
 }

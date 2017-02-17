@@ -8,7 +8,9 @@ public class Street{
 		dest=dest_;
 		name=name_;
 	}
-	
+	public Location getDest(){
+		return dest;
+	}
 	public String getName(){
 		return name;
 	}

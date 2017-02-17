@@ -15,5 +15,18 @@ public class Location{
 		connect_streets.add(street_);
 	
 	}
+	public ArrayList<Street> getStreets(){
+		return connect_streets;
+	}
+	public String getName(){
+
+		return name;
+	
+	}
+	public String toString(){
+	
+		return name + " " +connect_streets.size();
+	
+	}
 	
 }
