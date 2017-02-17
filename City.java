@@ -22,7 +22,7 @@ public class City {
 		presby.addStreet(new Street(sennot, "Bill st"));
 		presby.addStreet(new Street(union, "Fourth ave"));
 		
-		union.addStreet(new Street( hillman, "Phil st"));
+		union.addStreet(new Street(hillman, "Phil st"));
 		union.addStreet(new Street(outside, "Fourth ave"));
 		
 		sennot.addStreet(new Street(presby, "Bill st"));
@@ -43,22 +43,26 @@ public class City {
 	}
 	
 	public Location randomLocInCity(Random rng){
+		
 		return city.get(rng.nextInt(4));
+		
 	}
 
 	public String checkOutsideLocal(String road){
 
-			if(road.equals("Fifth ave")){
+		if(road.equals("Fifth ave")){
 				
-				return  "Cleveland!";
+			return  "Cleveland!";
 				
-			} 
-			else return "Philly!";
+		} 
+		else return "Philly!";
 			
 	}
 
 	public String toString(){
+		
 		return name+ " city size: " + city.size();
+		
 	}
 	
 

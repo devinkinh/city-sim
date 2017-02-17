@@ -71,7 +71,7 @@ public class Driver{
 	
 	public boolean checkIfSennot(){
 		
-		if(position.name.equals("Sennot")){
+		if(position.getName().equals("Sennot")){
 			visitedSennot++;
 			return true;
 		}
