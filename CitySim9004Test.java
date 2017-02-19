@@ -1,11 +1,11 @@
-/*import org.junit.Test;
+import java.util.Random;
+import java.util.ArrayList;
+import org.junit.Test;
+import org.mockito.*;
 import static org.junit.Assert.*;
 
-import org.mockito.*;
-
-
 public class CitySim9004Test{
-	@Test
+	/*@Test
 	public void testInitCity(){
 		//assertEquals(true, CitySim9004.init_city());
 	}
@@ -33,9 +33,9 @@ public class CitySim9004Test{
 		Driver driver = new Driver("kevin", l);
 		driver.checkOutsideLocal("Some road");
 
-	}
+	}*/
 	// Test that make sure update returns 
 	// the correct information given the drivers 
 	// location and current road
 
-}*/
+}

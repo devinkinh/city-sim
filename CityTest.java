@@ -11,11 +11,13 @@ public class CityTest {
 	// Tests the instantiation of a city object
 	// checks that the city arraylist exists and is not null
 	// Also checks if the city was appropriately named
+	// and that 5 locations were added
 	@Test
 	public void CityConstructorTest() {
 		City city = new City("CityTest");
 		assertEquals(city.getName(), "CityTest");
 		assertNotNull(city.getLocs());
+		assertEquals(5, city.getLocs().size());
 
 	}
 
