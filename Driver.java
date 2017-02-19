@@ -29,8 +29,6 @@ public class Driver {
 		return visitedSennot;
 	}
 
-	// Choose which street to take given the seed which to gen a random numb from
-	// and the acceptable range from which to pick the random numb
 	public String chooseDest(Random rng) {
 
 

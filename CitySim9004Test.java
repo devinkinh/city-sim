@@ -82,7 +82,7 @@ public class CitySim9004Test{
 		specifically that the right
 		statements are printed given how many times a
 		driver has visited sennot
-
+ 	
 	*********************************************/
 	// the case where driver visists 3 or more times
 	@Test
@@ -129,4 +129,21 @@ public class CitySim9004Test{
 					  "\n-----";
 		assertEquals(res, citySim.report(driver, "Cleveland!"));
 	}
+
+	 /*************************************/
+
+	 // Test to make sure that drivers 
+	 // are ordered so to that they traverse the city 
+	 // sequentially with Driver 1 being the first and 
+	 // Driver 5 being the last
+	 @Test
+	 public void testDriverTraverseOrder(){
+	 	CitySim9004 citySim = new CitySim9004();
+	 	Random r = new Random();
+	 	citySim.run(r);
+	 	Driver[] drivers = citySim.getDrivers();
+	 	for(int i = 0; i < drivers.length;i++){
+	 		assertEquals(("Driver "+(i+1)), drivers[i].getName());
+	 	}
+	 }
 }

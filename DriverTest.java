@@ -17,7 +17,7 @@ public class DriverTest {
 		assertEquals("local", driver.getLocation().getName());
 		assertEquals("local", driver.getlastLocation().getName());
 		assertEquals(0, driver.getSenCnt());
-		
+
 	}
 
 	// Test to make sure only streets that are
@@ -82,7 +82,7 @@ public class DriverTest {
 		driver = new Driver("Kevin", hillman);
 		Mockito.when(r.nextInt(hillman.getStreets().size())).thenReturn(0);
 		assertEquals("Phil st", driver.chooseDest(r));
-		
+
 		driver = new Driver("Kevin", hillman);
 		Mockito.when(r.nextInt(hillman.getStreets().size())).thenReturn(1);
 		assertEquals("Fifth ave", driver.chooseDest(r));
@@ -100,7 +100,7 @@ public class DriverTest {
 	}
 	// Test To make sure visiteSennot is not incremented
 	// when driver is not at sennot
-	@Test public void checkIfNotSennt(){
+	@Test public void checkIfNotSennotTest(){
 		Location l = Mockito.mock(Location.class);
 		Mockito.when(l.getName()).thenReturn("Presby");
 		Driver driver = new Driver("Kevin", l);
