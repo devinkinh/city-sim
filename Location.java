@@ -1,32 +1,35 @@
 import java.util.ArrayList;
 
-public class Location{
+public class Location {
 
 	public String name;
 	public ArrayList<Street> connect_streets;
 
-	public Location(String name_){
-		name=name_;
+	public Location(String name_) {
+		name = name_;
 		connect_streets = new ArrayList<Street>();
 	}
-	
-	public void addStreet(Street street_){
-		
+
+	public void addStreet(Street street_) {
+
 		connect_streets.add(street_);
-	
+
 	}
-	public ArrayList<Street> getStreets(){
+	public ArrayList<Street> getStreets() {
 		return connect_streets;
 	}
-	public String getName(){
+	public int getNumOfConnectedStreets(){
+		return connect_streets.size();
+	}
+	public String getName() {
 
 		return name;
-	
+
 	}
-	public String toString(){
-	
-		return name + " " +connect_streets.size();
-	
+	public String toString() {
+
+		return name + " " + connect_streets.size();
+
 	}
-	
+
 }

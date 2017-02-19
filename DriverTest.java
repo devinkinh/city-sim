@@ -1,10 +1,113 @@
-/*import static org.junit.Assert.assertEquals;
-
 import java.util.Random;
+import java.util.ArrayList;
+import org.junit.Test;
+import org.mockito.*;
+import static org.junit.Assert.*;
 
-import org.junit.Test;*/
+public class DriverTest {
+	// Test driver constructor
+	// also test getters
+	@Test
+	public void DriverConstructorTest() {
+		Location l = Mockito.mock(Location.class);
+		Mockito.when(l.getName()).thenReturn("local");
+		Driver driver = new Driver("Kevin", l);
+		assertEquals("Kevin", driver.getName());
+		assertEquals("local", driver.getLocation().getName());
+		assertEquals(0, driver.getSenCnt());
+	}
 
-public class DriverTest{
-	// Tests whether a driver will choose a street they are capable of going down 
+	// Test to make sure only streets that are
+	// available from the current location
+	// are chosen to travel through
+
+	@Test
+	public void chooseDestTest() {
+
+		ArrayList<Location> city = new ArrayList<Location>();
+
+		Location presby = new Location("Presby");
+		Location union = new Location("Union");
+		Location sennot = new Location("Sennot");
+		Location hillman = new Location("Hillman");
+		Location outside = new Location("Outside Location");
+
+		presby.addStreet(new Street(sennot, "Bill st"));
+		presby.addStreet(new Street(union, "Fourth ave"));
+
+		union.addStreet(new Street(hillman, "Phil st"));
+		union.addStreet(new Street(outside, "Fourth ave"));
+
+		sennot.addStreet(new Street(presby, "Bill st"));
+		sennot.addStreet(new Street(outside, "Fifth ave"));
+
+		hillman.addStreet(new Street(union, "Phil st"));
+		hillman.addStreet(new Street(sennot, "Fifth ave"));
+
+		city.add(presby);
+		city.add(union);
+		city.add(sennot);
+		city.add(hillman);
+		city.add(outside);
+
+		Random r = Mockito.mock(Random.class);
+
+		Driver driver = new Driver("Kevin", presby);
+		Mockito.when(r.nextInt(presby.getNumOfConnectedStreets())).thenReturn(0);
+		assertEquals("Bill st", driver.chooseDest(r));
+
+		driver = new Driver("Kevin", presby);
+		Mockito.when(r.nextInt(presby.getNumOfConnectedStreets())).thenReturn(1);
+		assertEquals("Fourth ave", driver.chooseDest(r));
+
+		driver = new Driver("Kevin", union);
+		Mockito.when(r.nextInt(union.getNumOfConnectedStreets())).thenReturn(0);
+		assertEquals("Phil st", driver.chooseDest(r));
+		
+		driver = new Driver("Kevin", union);
+		Mockito.when(r.nextInt(union.getNumOfConnectedStreets())).thenReturn(1);
+		assertEquals("Fourth ave", driver.chooseDest(r));
+
+		driver = new Driver("Kevin", sennot);
+		Mockito.when(r.nextInt(sennot.getNumOfConnectedStreets())).thenReturn(0);
+		assertEquals("Bill st", driver.chooseDest(r));
+		
+		driver = new Driver("Kevin", sennot);
+		Mockito.when(r.nextInt(sennot.getNumOfConnectedStreets())).thenReturn(1);
+		assertEquals("Fifth ave", driver.chooseDest(r));
+
+		driver = new Driver("Kevin", hillman);
+		Mockito.when(r.nextInt(hillman.getNumOfConnectedStreets())).thenReturn(0);
+		assertEquals("Phil st", driver.chooseDest(r));
+		
+		driver = new Driver("Kevin", hillman);
+		Mockito.when(r.nextInt(hillman.getNumOfConnectedStreets())).thenReturn(1);
+		assertEquals("Fifth ave", driver.chooseDest(r));
+		
+	}
+
+	// Test to make sure that the correct
+	// outside location name is returned
+	// when provided with the correct exit road
+	@Test
+	public void checkOutsideLocalWithValidRoadsTest(){
+	
+		Location l = Mockito.mock(Location.class);
+		Driver driver = new Driver("kevin", l);
+		assertEquals("Cleveland!", driver.checkOutsideLocal("Fifth ave"));
+		assertEquals("Philly!", driver.checkOutsideLocal("Fourth ave"));
+
+	}
+	// Test to make sure ab exception is thrown if 
+	// an invalid road is passed, that is anything 
+	// other than 'Fifth ave' or 'Fourth ave'
+	@Test(expected = IllegalArgumentException.class)
+	public void checkOutsideLocalWithInvalidRoadsTest(){
+	
+		Location l = Mockito.mock(Location.class);
+		Driver driver = new Driver("kevin", l);
+		driver.checkOutsideLocal("Some road");
+
+	}
 
 }
