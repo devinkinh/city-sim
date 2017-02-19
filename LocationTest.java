@@ -24,4 +24,6 @@ public class LocationTest {
 		loc.addStreet(street);
 		assertEquals(1, loc.getStreets().size());
 	}
+
+	
 }

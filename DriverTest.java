@@ -9,6 +9,7 @@ public class DriverTest {
 	// also test getters
 	@Test
 	public void DriverConstructorTest() {
+
 		Location l = Mockito.mock(Location.class);
 		Mockito.when(l.getName()).thenReturn("local");
 		Driver driver = new Driver("Kevin", l);
@@ -16,6 +17,7 @@ public class DriverTest {
 		assertEquals("local", driver.getLocation().getName());
 		assertEquals("local", driver.getlastLocation().getName());
 		assertEquals(0, driver.getSenCnt());
+		
 	}
 
 	// Test to make sure only streets that are

@@ -7,16 +7,25 @@ import java.util.ArrayList;
 public class  CitySim9004 {
 
 	private City city;
-	private Random rng;
+	private Driver[] driver;
 
-	public CitySim9004(Random rng_) {
+	public CitySim9004() {
 
-		rng = rng_;
 		city = new City("Pittsburgh");
 
 	}
+	public City getCity() {
+		return city;
+	}
+	public Driver[] getDrivers() {
+		if (driver != null) {
+			return driver;
+		} else {
+			throw new IllegalStateException("Drivers, do not exist yet, method run() should be invoked first");
+		}
+	}
 
-	public Driver[] genDrivers(int numDrivers) {
+	private Driver[] genDrivers(int numDrivers, Random rng) {
 
 		Driver[] res = new Driver[numDrivers];
 		for (int i = 0; i < numDrivers; i++) {
@@ -29,23 +38,28 @@ public class  CitySim9004 {
 
 	}
 
-	public void run() {
+	public String run(Random rng) {
 
 		String road = "";
-		Driver[] driver = genDrivers(5);
+		String res = "";
+		driver = genDrivers(5, rng);
 
 		for (int i = 0; i < driver.length; i++) {
 
 			driver[i].checkIfSennot();
+
 			while (!driver[i].getLocation().getName().equals("Outside Location")) {
 
 				road = driver[i].chooseDest(rng);
 				driver[i].checkIfSennot();
-				System.out.println(update(driver[i], road));
+				res+= "\n" + update(driver[i], road);
+
 			}
-			System.out.println(report(driver[i], checkOutsideLocal(road)));
+
+			res += "\n"+ report(driver[i], checkOutsideLocal(road));
 
 		}
+		return res;
 	}
 
 	public String checkOutsideLocal(String road) {
@@ -65,14 +79,14 @@ public class  CitySim9004 {
 		}
 
 	}
-	
-    public String update(Driver driver, String road) {
 
-		return driver.getName() + " heading from " + driver.getlastLocation().getName() 
-			   + " to " + driver.getLocation().getName() + " via " + road ;
+	public String update(Driver driver, String road) {
+
+		return driver.getName() + " heading from " + driver.getlastLocation().getName()
+		       + " to " + driver.getLocation().getName() + " via " + road ;
 
 	}
-	
+
 	public String report(Driver driver, String final_dest) {
 
 		String res = driver.getName() + " has gone to " + final_dest
@@ -99,8 +113,8 @@ public class  CitySim9004 {
 
 				Random rng = new Random(god_seed);
 
-				CitySim9004 city_sim = new CitySim9004(rng);
-				city_sim.run();
+				CitySim9004 city_sim = new CitySim9004();
+				System.out.println(city_sim.run(rng));
 
 			} catch (Exception e) {
 				System.out.println("An invalid argument was entered, should be an integer value");

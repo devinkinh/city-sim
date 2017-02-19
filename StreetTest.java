@@ -12,7 +12,7 @@ public class StreetTest {
 		Street street = new Street(l, "Phil st");
 		
 
-		assertEquals("Phil St" , street.getName());
+		assertEquals("Phil st" , street.getName());
 		assertNotNull(street.getDest());
 	}
 	// Test to valid location is 
