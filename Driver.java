@@ -1,90 +1,51 @@
 import java.util.Random;
-import java.lang.Exception.*;
 public class Driver {
 
 	private String name;
-	private Location position;
-	private Location lastPosit;
+	private Location location;
+	private Location lastLocation;
 	private int visitedSennot;
 
-	public Driver(String name_, Location position_) {
+	public Driver(String name_, Location location_) {
 		name = name_;
-		position = position_;
-		lastPosit = position_;
+		location = location_;
+		lastLocation = location_;
 		visitedSennot = 0;
 	}
 
 	public String getName() {
 		return name;
 	}
+
 	public Location getLocation() {
-		return position;
+		return location;
 	}
+
+	public Location getlastLocation() {
+		return lastLocation;
+	}
+
 	public int getSenCnt() {
 		return visitedSennot;
 	}
 
+	// Choose which street to take given the seed which to gen a random numb from
+	// and the acceptable range from which to pick the random numb
 	public String chooseDest(Random rng) {
 
-		lastPosit = position;
-		int max = position.getStreets().size();
-		Street street = position.getStreets().get(rng.nextInt(max));
-		position = street.getDest();
+
+		int max = location.getStreets().size();
+		lastLocation = location;
+
+		Street street = location.getStreets().get(rng.nextInt(max));
+		location = street.getDest();
 
 		return street.getName();
-
-	}
-
-	public String checkOutsideLocal(String road) {
-
-		if (road.equals("Fifth ave")) {
-
-			return  "Cleveland!";
-
-		} else if (road.equals("Fourth ave")) {
-
-			return "Philly!";
-
-		} else {
-
-			throw new IllegalArgumentException("The road passed is not connected to any outside location");
-
-		}
-
-	}
-
-	public boolean checkOutside() {
-
-		return position.getName().equals("Outside Location");
-
-	}
-
-	public String update(String road)  {
-
-		return name + " heading from " + lastPosit.getName()
-		       + " to " + position.getName() + " via " + road ;
-
-	}
-
-	public String report(String final_dest) {
-
-		String res = name + " has gone to " + final_dest
-		             + "\n" + name + " met with Professor Laboon " + visitedSennot + " time(s)";
-
-		if (visitedSennot == 0) {
-			res += "\nThat student missed out!";
-		}
-
-		if (visitedSennot >= 3) {
-			res += "\nWow, that driver needed a lot of CS help!";
-		}
-
-		return res + "\n-----";
 	}
 
 	public boolean checkIfSennot() {
 
-		if (position.getName().equals("Sennot")) {
+		if (location.getName().equals("Sennot")) {
 			visitedSennot++;
 			return true;
 		} else return false;

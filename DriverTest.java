@@ -14,6 +14,7 @@ public class DriverTest {
 		Driver driver = new Driver("Kevin", l);
 		assertEquals("Kevin", driver.getName());
 		assertEquals("local", driver.getLocation().getName());
+		assertEquals("local", driver.getlastLocation().getName());
 		assertEquals(0, driver.getSenCnt());
 	}
 
@@ -53,61 +54,58 @@ public class DriverTest {
 		Random r = Mockito.mock(Random.class);
 
 		Driver driver = new Driver("Kevin", presby);
-		Mockito.when(r.nextInt(presby.getNumOfConnectedStreets())).thenReturn(0);
+		Mockito.when(r.nextInt(presby.getStreets().size())).thenReturn(0);
 		assertEquals("Bill st", driver.chooseDest(r));
 
 		driver = new Driver("Kevin", presby);
-		Mockito.when(r.nextInt(presby.getNumOfConnectedStreets())).thenReturn(1);
+		Mockito.when(r.nextInt(presby.getStreets().size())).thenReturn(1);
 		assertEquals("Fourth ave", driver.chooseDest(r));
 
 		driver = new Driver("Kevin", union);
-		Mockito.when(r.nextInt(union.getNumOfConnectedStreets())).thenReturn(0);
+		Mockito.when(r.nextInt(union.getStreets().size())).thenReturn(0);
 		assertEquals("Phil st", driver.chooseDest(r));
 		
 		driver = new Driver("Kevin", union);
-		Mockito.when(r.nextInt(union.getNumOfConnectedStreets())).thenReturn(1);
+		Mockito.when(r.nextInt(union.getStreets().size())).thenReturn(1);
 		assertEquals("Fourth ave", driver.chooseDest(r));
 
 		driver = new Driver("Kevin", sennot);
-		Mockito.when(r.nextInt(sennot.getNumOfConnectedStreets())).thenReturn(0);
+		Mockito.when(r.nextInt(sennot.getStreets().size())).thenReturn(0);
 		assertEquals("Bill st", driver.chooseDest(r));
 		
 		driver = new Driver("Kevin", sennot);
-		Mockito.when(r.nextInt(sennot.getNumOfConnectedStreets())).thenReturn(1);
+		Mockito.when(r.nextInt(sennot.getStreets().size())).thenReturn(1);
 		assertEquals("Fifth ave", driver.chooseDest(r));
 
 		driver = new Driver("Kevin", hillman);
-		Mockito.when(r.nextInt(hillman.getNumOfConnectedStreets())).thenReturn(0);
+		Mockito.when(r.nextInt(hillman.getStreets().size())).thenReturn(0);
 		assertEquals("Phil st", driver.chooseDest(r));
 		
 		driver = new Driver("Kevin", hillman);
-		Mockito.when(r.nextInt(hillman.getNumOfConnectedStreets())).thenReturn(1);
+		Mockito.when(r.nextInt(hillman.getStreets().size())).thenReturn(1);
 		assertEquals("Fifth ave", driver.chooseDest(r));
 		
 	}
-
-	// Test to make sure that the correct
-	// outside location name is returned
-	// when provided with the correct exit road
+	// Test to make sure visitedSennot is incremented 
+	// when driver is currently at location
 	@Test
-	public void checkOutsideLocalWithValidRoadsTest(){
-	
+	public void checkIfSennotTest(){
 		Location l = Mockito.mock(Location.class);
-		Driver driver = new Driver("kevin", l);
-		assertEquals("Cleveland!", driver.checkOutsideLocal("Fifth ave"));
-		assertEquals("Philly!", driver.checkOutsideLocal("Fourth ave"));
-
+		Mockito.when(l.getName()).thenReturn("Sennot");
+		Driver driver = new Driver("Kevin", l);
+		driver.checkIfSennot();
+		assertEquals(1,driver.getSenCnt());
 	}
-	// Test to make sure ab exception is thrown if 
-	// an invalid road is passed, that is anything 
-	// other than 'Fifth ave' or 'Fourth ave'
-	@Test(expected = IllegalArgumentException.class)
-	public void checkOutsideLocalWithInvalidRoadsTest(){
-	
+	// Test To make sure visiteSennot is not incremented
+	// when driver is not at sennot
+	@Test public void checkIfNotSennt(){
 		Location l = Mockito.mock(Location.class);
-		Driver driver = new Driver("kevin", l);
-		driver.checkOutsideLocal("Some road");
+		Mockito.when(l.getName()).thenReturn("Presby");
+		Driver driver = new Driver("Kevin", l);
+		driver.checkIfSennot();
+		assertEquals(0,driver.getSenCnt());
 
 	}
 
+	
 }

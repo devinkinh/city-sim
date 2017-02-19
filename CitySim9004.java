@@ -37,23 +37,62 @@ public class  CitySim9004 {
 		for (int i = 0; i < driver.length; i++) {
 
 			driver[i].checkIfSennot();
-			while (!driver[i].checkOutside()) {
+			while (!driver[i].getLocation().getName().equals("Outside Location")) {
 
 				road = driver[i].chooseDest(rng);
 				driver[i].checkIfSennot();
-				System.out.println(driver[i].update(road));
-
+				System.out.println(update(driver[i], road));
 			}
-
-			System.out.println(driver[i].report(driver[i].checkOutsideLocal(road)));
+			System.out.println(report(driver[i], checkOutsideLocal(road)));
 
 		}
+	}
+
+	public String checkOutsideLocal(String road) {
+
+		if (road.equals("Fifth ave")) {
+
+			return  "Cleveland!";
+
+		} else if (road.equals("Fourth ave")) {
+
+			return "Philly!";
+
+		} else {
+
+			throw new IllegalArgumentException("The road passed is not connected to any outside location");
+
+		}
+
+	}
+	
+    public String update(Driver driver, String road) {
+
+		return driver.getName() + " heading from " + driver.getlastLocation().getName() 
+			   + " to " + driver.getLocation().getName() + " via " + road ;
+
+	}
+	
+	public String report(Driver driver, String final_dest) {
+
+		String res = driver.getName() + " has gone to " + final_dest
+		             + "\n" + driver.getName() + " met with Professor Laboon " + driver.getSenCnt() + " time(s)";
+
+		if (driver.getSenCnt() == 0) {
+			res += "\nThat student missed out!";
+		}
+
+		if (driver.getSenCnt() >= 3) {
+			res += "\nWow, that driver needed a lot of CS help!";
+		}
+
+		return res + "\n-----";
 	}
 
 	public static void main(String[] args) {
 
 		if (args.length == 0) {
-			System.out.println("One integer value argument must be provided");
+			System.out.println("One integer type argument must be provided");
 		} else if (args.length == 1) {
 			try {
 				int god_seed = Integer.parseInt(args[0]);
@@ -64,11 +103,11 @@ public class  CitySim9004 {
 				city_sim.run();
 
 			} catch (Exception e) {
-				System.out.println("An invalid argument was entered, should be a integer value");
+				System.out.println("An invalid argument was entered, should be an integer value");
 			}
 
 		} else if (args.length > 1) {
-			System.out.println("Too many arguments were provdided");
+			System.out.println("Too many arguments were provided");
 		}
 
 	}

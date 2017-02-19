@@ -18,17 +18,9 @@ public class Location {
 	public ArrayList<Street> getStreets() {
 		return connect_streets;
 	}
-	public int getNumOfConnectedStreets(){
-		return connect_streets.size();
-	}
 	public String getName() {
 
 		return name;
-
-	}
-	public String toString() {
-
-		return name + " " + connect_streets.size();
 
 	}
 
