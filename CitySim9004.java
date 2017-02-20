@@ -1,9 +1,7 @@
 import java.util.Random;
 import java.util.ArrayList;
-// windows
-// javac -cp ./junit-4.12.jar;./hamcrest-core-1.3.jar;./mockito-core-1.10.19.jar;./objenesis-2.4.jar; *.java
-// mac
-// javac -cp ./junit-4.12.jar:./hamcrest-core-1.3.jar:./mockito-core-1.10.19.jar:./objenesis-2.4.jar: *.java
+
+public class  CitySim9004 
 public class  CitySim9004 {
 
 	private City city;
@@ -24,13 +22,14 @@ public class  CitySim9004 {
 			throw new IllegalStateException("Drivers, do not exist yet, method run() should be invoked first");
 		}
 	}
-
+	
+	// set up initial position
 	private Driver[] genDrivers(int numDrivers, Random rng) {
 
 		Driver[] res = new Driver[numDrivers];
 		for (int i = 0; i < numDrivers; i++) {
 
-			res[i] = new Driver(("Driver " + (i + 1)),  city.randomLocInCity(rng)); // set up initial position
+			res[i] = new Driver(("Driver " + (i + 1)),  city.randomLocInCity(rng)); 
 
 		}
 		return res;
