@@ -43,7 +43,7 @@ public class CitySim9004Test{
 		assertEquals("Cleveland!", citySim.checkOutsideLocal("Fifth ave"));
 		assertEquals("Philly!", citySim.checkOutsideLocal("Fourth ave"));
 	}
-	// Test to make sure ab exception is thrown if 
+	// Test to make sure an exception is thrown if 
 	// an invalid road is passed, that is anything 
 	// other than 'Fifth ave' or 'Fourth ave'
 	@Test(expected = IllegalArgumentException.class)

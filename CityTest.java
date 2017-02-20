@@ -25,6 +25,10 @@ public class CityTest {
 	@Test
 	public void getNameOfCityTest() {
 		City city = new City("CityTest");
+		Location sennot = new Location("Sennot");
+		Location l = Mockito .mock(Location.class);
+		sennot.addStreet(new Street(l, "Bill st"));
+		sennot.addStreet(new Street(l, "Fifth ave"));
 
 		assertEquals(city.getName(), "CityTest");
 	}
